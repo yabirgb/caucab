@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hola</title>
+    {% block head %}{% endblock head %}
+  </head>
+  <body>
+    <form class="" action="{% url 'publish' %}" method="post">
+      {% csrf_token %}
+      <input type="text" name="text" value="">
+      <button type="submit" name="button">Tweet</button>
+    </form>
+    {% block main %}
+    {% endblock main %}
+  </body>
+</html>

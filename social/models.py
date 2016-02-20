@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 class Hashtag(models.Model):
     name = models.CharField(blank=False, max_length=100)
 
+    def __str__(self):
+        return self.name
+
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name = "author")
 
@@ -19,7 +22,7 @@ class Message(models.Model):
 
     message = models.CharField(blank=False, max_length=180)
     author = models.ForeignKey(Profile, related_name = "author")
-    mentions = models.ManyToManyField(User, related_name = "mentions", blank = True)
+    mentions = models.ManyToManyField(Profile, related_name = "mentions", blank = True)
     hashtag = models.ManyToManyField(Hashtag, blank = True)
     likes = models.IntegerField(blank=True, null=True)
     favorites = models.IntegerField(blank=True, null=True)
@@ -27,10 +30,14 @@ class Message(models.Model):
 
     def get_hashtag(self):
         hashtags = [has for has in self.message.split(" ") if has[0] == "#"]
-        print(hashtags)
+        return hashtags
+
+    def get_mentions(self):
+        mentions = [mention for mention in self.message.split(" ") if mention[0] == "@"]
+        return mentions
 
     def save(self, *args, **kwargs):
-        if not self.pk:
+        #if not self.pk:
         #This code only happens if the objects is
         #not in the database yet. Otherwise it would
         #have pk
@@ -38,4 +45,4 @@ class Message(models.Model):
         super(Message, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.author.user.username
+        return self.message
