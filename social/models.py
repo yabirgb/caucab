@@ -11,6 +11,8 @@ class Hashtag(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name = "author")
+    following = models.ManyToManyField("self", related_name = "following", blank= True)
+    followers = models.ManyToManyField("self", related_name = "followers", blank= True)
 
     def __str__(self):
         return self.user.username
@@ -27,6 +29,8 @@ class Message(models.Model):
     likes = models.IntegerField(blank=True, null=True)
     favorites = models.IntegerField(blank=True, null=True)
     image1 = models.ImageField(upload_to=user_directory_path, blank= True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def get_hashtag(self):
         hashtags = [has for has in self.message.split(" ") if has[0] == "#"]
@@ -45,4 +49,4 @@ class Message(models.Model):
         super(Message, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.message
+        return self.message + " by " + self.author.user.username

@@ -9,10 +9,16 @@ from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 
+#to make queries
+from itertools import chain #join
+from operator import attrgetter #used to order
+from django.db.models import Q
+
 # Create your views here.
 
 def publish(request):
     if request.method == "POST":
+        print("here1")
         if request.user.is_authenticated():
             text = request.POST["text"]
             author = Profile.objects.get(user=request.user)
@@ -31,7 +37,7 @@ def publish(request):
                 print(i[1:])
                 p = Profile.objects.get(user__username = i[1:])
                 message.mentions.add(p)
-
+            print("here")
             message.save()
 
             response = {"text": text}
@@ -40,10 +46,18 @@ def publish(request):
             print("Not loged")
             return redirect(reverse_lazy("login"))
 
+
 def home(request):
     if not request.user.is_authenticated():
         return redirect(reverse_lazy('login'))
+    profile = Profile.objects.get(user= request.user)
+
+    messages_following = Message.objects.filter(Q(author = profile.following.all()))
+    messages_own = Message.objects.filter(author = profile)
+    messages = sorted(chain(messages_following, messages_own),key=attrgetter('created'), reverse = True)
+
     response = {}
+    response["messages"] = messages
     return render_to_response("user/index.html", response, context_instance = RequestContext(request))
 
 @login_required

@@ -144,5 +144,9 @@ LOGGING = {
     }
 }
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "social/static"),
+]
+
 STATIC_URL = '/static/'
 MEDIA_ROOT = '/home/yabir/code/python/newcaucab/src/media/'
