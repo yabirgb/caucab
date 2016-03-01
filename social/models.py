@@ -9,6 +9,7 @@ class Hashtag(models.Model):
     def __str__(self):
         return self.name
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name = "author")
     following = models.ManyToManyField("self", related_name = "following", blank= True)
@@ -50,3 +51,36 @@ class Message(models.Model):
 
     def __str__(self):
         return self.message + " by " + self.author.user.username
+
+class Notification(models.Model):
+
+    CATEGORIES = (
+        (0, "Like"),
+        (1, "Repeat"),
+        (2, "Follow"),
+        (3, "Mention")
+    )
+
+    origin = models.ForeignKey(Profile, related_name= "origin")
+    objetive = models.ForeignKey(Profile, related_name= "objetive")
+    category = models.IntegerField(choices = CATEGORIES)
+    message = models.ForeignKey(Message, related_name= "message_refered", blank = True, null = True)
+
+    def __str__(self):
+        return str(self.CATEGORIES[self.category][1])
+
+class Circle(models.Model):
+    colors = (
+        ("red darken-1","red"),#red
+        ("purple darken-1","purple"),#purple
+        ("white","white"),
+        ("blue darken-1","blue")#blue
+    )
+
+    name = models.CharField(max_length=50)
+    owner = models.ForeignKey(Profile, related_name = "owner")
+    members = models.ManyToManyField(Profile, blank = True)
+    color = models.CharField(choices = colors, max_length= 30)
+
+    def __str__(self):
+        return str(self.name)

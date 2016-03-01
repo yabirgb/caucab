@@ -25,17 +25,11 @@ urlpatterns = [
     url(r'^$', social.views.home, name = "home"),
     url(regex=r'^me/$', view=social.views.profile, name='profile'),
     url(regex=r'^publish/$', view=social.views.publish, name='publish'),
-    url(r'^login/$', login,
-          {
-           "template_name" : "login.html",
-          },
-          name="login"),
+    url(regex=r'^notifications/$', view=social.views.notifications, name='notifications'),
+    url(r'^login/$', login,{"template_name" : "login.html",},name="login"),
 
       # Map the 'django.contrib.auth.views.logout' view to the /logout/ URL.
       # Pass additional parameters to the view like the page to show after logout
       # via a dictionary used as the 3rd argument.
-     url(r'^logout/$', logout,
-          {
-            "next_page" : reverse_lazy('login')
-          }, name="logout"),
+     url(r'^logout/$', logout,{"next_page" : reverse_lazy('login')}, name="logout"),
 ]

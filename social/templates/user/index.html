@@ -1,13 +1,4 @@
 {% extends "base.html" %}
 {% block main %}
-<div class="container">
-  <div class="row">
-    <div class="col s12">
-      {% for message in messages %}
-          <b>{{message.author}}:</b><br>{{message.message}} - {{message.created}} </br>
-      {% endfor %}
-
-    </div>
-  </div>
-</div>
+  {% include "timeline_template.html" %}
 {% endblock main %}
