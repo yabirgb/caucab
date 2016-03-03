@@ -120,7 +120,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 from django.core.urlresolvers import reverse_lazy
 
-#LOGIN_REDIRECT_URL = reverse_lazy('home')
+LOGIN_REDIRECT_URL = reverse_lazy('home')
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
