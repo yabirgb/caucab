@@ -77,6 +77,7 @@ class Circle(models.Model):
         ("blue darken-1","blue")#blue
     )
 
+    identificator = models.CharField(max_length=100, unique = True)
     name = models.CharField(max_length=50)
     owner = models.ForeignKey(Profile, related_name = "owner")
     members = models.ManyToManyField(Profile, blank = True)
