@@ -23,6 +23,8 @@ from django.contrib.auth.views import login, logout
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', social.views.home, name = "home"),
+    url(regex=r'^circle/(?P<circle_id>[\w-]+)$', view=social.views.circle),
+    url(regex=r'^u/(?P<username>[\w-]+)$', view=social.views.profile),
     url(regex=r'^me/$', view=social.views.profile, name='profile'),
     url(regex=r'^publish/$', view=social.views.publish, name='publish'),
     url(regex=r'^notifications/$', view=social.views.notifications, name='notifications'),
