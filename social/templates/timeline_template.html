@@ -3,7 +3,7 @@
     <div class="container">
       <ul>
         {% for circle in circles %}
-          <li class = "card-panel {{circle.color}}" {% if circle.color != "white" %} style = "color: white;" {% endif %}>{{circle}}</li>
+          <a href="/circle/{{circle.identificator}}"><li class = "card-panel {{circle.color}}" {% if circle.color != "white" %} style = "color: white;" {% endif %}>{{circle}}</li></a>
         {% endfor %}
       </ul>
     </div>

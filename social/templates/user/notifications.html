@@ -1,5 +1,38 @@
 {% extends "base.html" %}
 
 {% block main %}
-  {% include "timeline_template.html" %}
+{% load messages_links %}<div class="row">
+  <div class="col m3">
+    <div class="container">
+      <ul>
+        {% for circle in circles %}
+          <a href="/circle/{{circle.identificator}}"><li class = "card-panel {{circle.color}}" {% if circle.color != "white" %} style = "color: white;" {% endif %}>{{circle}}</li></a>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container">
+    <!-- Messages -->
+    <div class="col s12 m9">
+      {% for message in messages %}
+        <div class="card-panel">
+          <!-- User -->
+          <div class="row">
+            <div class="col s3">
+              <b>{{message.author}}</b>
+            </div>
+          </div>
+
+          <!-- Message -->
+          <div class="row">
+            <div class="col s12">
+              {{message.message.message|generate_links|safe}}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
 {% endblock main %}

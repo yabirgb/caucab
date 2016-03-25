@@ -15,8 +15,6 @@ from itertools import chain #join
 from operator import attrgetter #used to order
 from django.db.models import Q
 
-# Create your views here.
-
 def get_user(u):
     return Profile.objects.get(user = u)
 
@@ -83,7 +81,7 @@ def notifications(request):
     profile = get_user(request.user)
     notifications = Notification.objects.all().filter(objetive = profile).order_by("-pk")
 
-    response = {"notifications":notifications, "profile": profile}
+    response = {"messages":notifications, "profile": profile}
     return render(request, "user/notifications.html", response)
 @login_required
 def circle(request, circle_id):
