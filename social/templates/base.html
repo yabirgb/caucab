@@ -13,7 +13,7 @@
   <body>
     <nav class="light-blue darken-3">
       <div class="nav-wrapper">
-        <a href="#" class="brand-logo center">Logo</a>
+        <a href="#" class="brand-logo center">Caucab</a>
         {% if request.user.is_authenticated %}
         <ul id="nav-mobile" class="left hide-on-med-and-down">
           <li><a href="{% url 'home'%}">Timeline</a></li>
@@ -27,6 +27,7 @@
       </div>
     </nav>
     <!-- Send message -->
+    {% if request.user.is_authenticated %}
     <form class="" action="{% url 'publish' %}" method="post">
       {% csrf_token %}
       <div class="row" id = "form">
@@ -34,12 +35,13 @@
           <input type="text" name="text" value="" placeholder="What are you thinking in?" maxlength="180">
         </div>
         <div class="col s2 m2">
-          <button class="btn waves-effect waves-light"  id = "publish" type="submit" name="button">Submit
+          <button class="btn waves-effect waves-light"  id = "publish" type="submit" name="button">Publish
             <i class="material-icons right">send</i>
           </button>
         </div>
       </div>
     </form>
+    {% endif %}
     <!-- Main block -->
     {% block main %}
     {% endblock main %}
